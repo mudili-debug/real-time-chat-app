@@ -21,12 +21,13 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
 app.use('/api', chatRoutes);
 
-// ✅ Serve frontend build (after API routes)
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+const cors = require('cors');
+app.use(cors({ origin: 'https://your-frontend.vercel.app' }));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+const io = require('socket.io')(server, {
+  cors: { origin: 'https://your-frontend.vercel.app' }
 });
+
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
