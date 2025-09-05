@@ -21,12 +21,6 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
 app.use('/api', chatRoutes);
 
-const cors = require('cors');
-app.use(cors({ origin: 'https://your-frontend.vercel.app' }));
-
-const io = require('socket.io')(server, {
-  cors: { origin: 'https://your-frontend.vercel.app' }
-});
 
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
